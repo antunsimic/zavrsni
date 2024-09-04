@@ -1,0 +1,26 @@
+[package]
+name = "grovedb-storage"
+version = "2.0.0"
+edition = "2021"
+license = "MIT"
+description = "Storage extension crate for GroveDB"
+homepage = "https://www.grovedb.org/"
+documentation = "https://docs.rs/grovedb-storage"
+repository = "https://github.com/dashpay/grovedb"
+
+[dependencies]
+lazy_static = { version = "1.4.0", optional = true }
+num_cpus = { version = "1.16.0", optional = true }
+tempfile = { version = "3.10.1", optional = true }
+blake3 = { version = "1.5.1", optional = true }
+integer-encoding = { version = "4.0.0", optional = true }
+grovedb-visualize = { version = "2.0.0", path = "../visualize" }
+strum = { version = "0.26.2", features = ["derive"] }
+grovedb-costs = { version = "2.0.0", path = "../costs" }
+thiserror = "1.0.59"
+rocksdb = { version = "0.22.0", optional = true }
+hex = "0.4.3"
+grovedb-path = { version = "2.0.0", path = "../path" }
+
+[features]
+rocksdb_storage = ["rocksdb", "num_cpus", "lazy_static", "tempfile", "blake3", "integer-encoding"]

@@ -1,0 +1,84 @@
+[package]
+name = "grovedb-merk"
+description = "Merkle key/value store adapted for GroveDB"
+version = "2.0.0"
+authors = ["Samuel Westrich <sam@dash.org>", "Wisdom Ogwu <wisdom@dash.org", "Evgeny Fomin <evgeny.fomin@dash.org>", "Matt Bell <mappum@gmail.com>"]
+edition = "2021"
+license = "MIT"
+homepage = "https://www.grovedb.org"
+repository = "https://github.com/dashpay/grovedb"
+readme = "README.md"
+documentation = "https://docs.rs/grovedb-merk"
+
+[dependencies]
+thiserror = "1.0.58"
+bincode = { version = "2.0.0-rc.3" }
+grovedb-storage = { version = "2.0.0", path = "../storage", optional = true }
+failure = "0.1.8"
+integer-encoding = "4.0.0"
+indexmap = "2.2.6"
+grovedb-costs = { version = "2.0.0" , path = "../costs" }
+grovedb-visualize = { version = "2.0.0", path = "../visualize" }
+grovedb-path = { version = "2.0.0", path = "../path" }
+hex = "0.4.3"
+grovedb-version = { version = "2.0.0", path = "../grovedb-version" }
+
+[dependencies.time]
+version = "0.3.34"
+optional = true
+
+[dependencies.colored]
+version = "2.1.0"
+optional = true
+
+[dependencies.num_cpus]
+version = "1.16.0"
+optional = true
+
+[dependencies.byteorder]
+version = "1.5.0"
+optional = true
+
+[dependencies.ed]
+version = "0.2.2"
+optional = true
+
+[dependencies.blake3]
+version = "1.5.1"
+optional = true
+
+[dependencies.rand]
+version = "0.8.5"
+features = ["small_rng"]
+optional = true
+
+[features]
+default = ["full"]
+proof_debug = []
+full = ["rand",
+        "time",
+        "colored",
+        "num_cpus",
+        "byteorder",
+        "ed",
+        "blake3",
+        "grovedb-storage",
+        "grovedb-storage/rocksdb_storage"
+]
+verify = [
+        "ed",
+        "blake3"
+]
+grovedbg = ["full"]
+
+[dev-dependencies]
+tempfile = "3.10.1"
+criterion = "0.5.1"
+
+[[bench]]
+name = "merk"
+harness = false
+
+[[bench]]
+name = "ops"
+harness = false
