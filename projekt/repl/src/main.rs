@@ -8,33 +8,7 @@ use grovedb::replication::CURRENT_STATE_SYNC_VERSION;
 use grovedb::replication::MultiStateSyncInfo;
 use grovedb_version::version::GroveVersion;
 
-
-
-const MAIN_ΚΕΥ: &[u8] = b"key_main";
-const MAIN_ΚΕΥ_EMPTY: &[u8] = b"key_main_empty";
-
-const KEY_INT_0: &[u8] = b"key_int_0";
-const KEY_INT_1: &[u8] = b"key_int_1";
-const KEY_INT_2: &[u8] = b"key_int_2";
-const KEY_INT_REF_0: &[u8] = b"key_int_ref_0";
-const KEY_INT_A: &[u8] = b"key_sum_0";
 const ROOT_PATH: &[&[u8]] = &[];
-
-
-const SEMESTER_1: &[u8] = b"semester_1";
-const SEMESTER_2: &[u8] = b"semester_2";
-const SEMESTER_3: &[u8] = b"semester_3";
-const SEMESTER_4: &[u8] = b"semester_4";
-const SEMESTER_5: &[u8] = b"semester_5";
-const SEMESTER_6: &[u8] = b"semester_6";
-
-const COURSES_SEMESTER_1: &[&[u8]] = &[b"maths", b"programming", b"physics"];
-const COURSES_SEMESTER_2: &[&[u8]] = &[b"data_structures", b"algorithms", b"discrete_math"];
-const COURSES_SEMESTER_3: &[&[u8]] = &[b"databases", b"operating_systems", b"computer_networks"];
-const COURSES_SEMESTER_4: &[&[u8]] = &[b"software_engineering", b"theory_of_computation", b"artificial_intelligence"];
-const COURSES_SEMESTER_5: &[&[u8]] = &[b"machine_learning", b"computer_graphics", b"distributed_systems"];
-const COURSES_SEMESTER_6: &[&[u8]] = &[b"cyber_security", b"cloud_computing", b"big_data"];
-
 
 // Allow insertions to overwrite trees
 // This is necessary so the tutorial can be rerun easily
