@@ -18,50 +18,7 @@ const INSERT_OPTIONS: Option<InsertOptions> = Some(InsertOptions {
     base_root_storage_is_free: true,
 });
 
-fn populate_db(grovedb_path: String, grove_version: &GroveVersion) -> GroveDb {
-    let db = GroveDb::open(grovedb_path).unwrap();
 
-    insert_empty_tree_db(&db, ROOT_PATH, MAIN_ΚΕΥ, &grove_version);
-    insert_empty_tree_db(&db, ROOT_PATH, MAIN_ΚΕΥ_EMPTY, &grove_version);
-    insert_empty_tree_db(&db, &[MAIN_ΚΕΥ], KEY_INT_0, &grove_version);
-    insert_empty_tree_db(&db, &[MAIN_ΚΕΥ], KEY_INT_1, &grove_version);
-    insert_empty_tree_db(&db, &[MAIN_ΚΕΥ], KEY_INT_2, &grove_version);
-
-    let tx = db.start_transaction();
-    let batch_size = 50;
-    for i in 0..=5 {
-        insert_range_values_db(&db, &[MAIN_ΚΕΥ, KEY_INT_0], i * batch_size, i * batch_size + batch_size - 1, &tx, &grove_version);
-    }
-    let _ = db.commit_transaction(tx);
-
-    let tx = db.start_transaction();
-    let batch_size = 50;
-    for i in 0..=5 {
-        insert_range_values_db(&db, &[MAIN_ΚΕΥ, KEY_INT_1], i * batch_size, i * batch_size + batch_size - 1, &tx, &grove_version);
-    }
-    let _ = db.commit_transaction(tx);
-
-    let tx = db.start_transaction();
-    let batch_size = 50;
-    for i in 0..=5 {
-        insert_range_values_db(&db, &[MAIN_ΚΕΥ, KEY_INT_2], i * batch_size, i * batch_size + batch_size - 1, &tx, &grove_version);
-    }
-    let _ = db.commit_transaction(tx);
-
-    insert_empty_tree_db(&db, &[MAIN_ΚΕΥ], KEY_INT_REF_0, &grove_version);
-
-    let tx_2 = db.start_transaction();
-    insert_range_ref_double_values_db(&db, &[MAIN_ΚΕΥ, KEY_INT_REF_0], KEY_INT_0, 1, 50, &tx_2, &grove_version);
-    let _ = db.commit_transaction(tx_2);
-
-    insert_empty_sum_tree_db(&db, &[MAIN_ΚΕΥ], KEY_INT_A, &grove_version);
-
-    let tx_3 = db.start_transaction();
-    insert_range_values_db(&db, &[MAIN_ΚΕΥ, KEY_INT_A], 1, 500, &tx_3, &grove_version);
-    insert_sum_element_db(&db, &[MAIN_ΚΕΥ, KEY_INT_A], 501, 550, &tx_3, &grove_version);
-    let _ = db.commit_transaction(tx_3);
-    db
-}
 
 fn create_empty_db(grovedb_path: String) -> GroveDb   {
     let db = GroveDb::open(grovedb_path).unwrap();
@@ -196,28 +153,7 @@ fn insert_range_values_db(db: &GroveDb, path: &[&[u8]], min_i: u32, max_i: u32, 
     }
 }
 
-fn insert_range_ref_double_values_db(db: &GroveDb, path: &[&[u8]], ref_key: &[u8], min_i: u32, max_i: u32, transaction: &Transaction, grove_version: &GroveVersion)
-{
-    for i in min_i..=max_i {
-        let i_vec = i.to_be_bytes().to_vec();
-        let value = i * 2;
-        let value_vec = value.to_be_bytes().to_vec();
-        db.insert(
-            path,
-            &i_vec,
-            Element::new_reference(ReferencePathType::AbsolutePathReference(vec![
-                MAIN_ΚΕΥ.to_vec(),
-                ref_key.to_vec(),
-                value_vec.to_vec()
-            ])),
-            INSERT_OPTIONS,
-            Some(&transaction),
-            grove_version,
-        )
-            .unwrap()
-            .expect("successfully inserted values");
-    }
-}
+
 
 fn insert_empty_sum_tree_db(db: &GroveDb, path: &[&[u8]], key: &[u8], grove_version: &GroveVersion)
 {
