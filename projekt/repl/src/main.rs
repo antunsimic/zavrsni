@@ -139,13 +139,6 @@ fn insert_empty_tree_db(db: &GroveDb, path: &[&[u8]], key: &[u8], grove_version:
 
 
 
-
-fn insert_empty_sum_tree_db(db: &GroveDb, path: &[&[u8]], key: &[u8], grove_version: &GroveVersion)
-{
-    db.insert(path, key, Element::empty_sum_tree(), INSERT_OPTIONS, None, grove_version)
-        .unwrap()
-        .expect("successfully inserted tree");
-}
 fn insert_sum_element_db(db: &GroveDb, path: &[&[u8]], min_i: u32, max_i: u32, transaction: &Transaction, grove_version: &GroveVersion)
 {
     for i in min_i..=max_i {
