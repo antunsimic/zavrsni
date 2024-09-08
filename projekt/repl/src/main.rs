@@ -136,22 +136,7 @@ fn insert_empty_tree_db(db: &GroveDb, path: &[&[u8]], key: &[u8], grove_version:
         .unwrap()
         .expect("successfully inserted tree");
 }
-fn insert_range_values_db(db: &GroveDb, path: &[&[u8]], min_i: u32, max_i: u32, transaction: &Transaction, grove_version: &GroveVersion)
-{
-    for i in min_i..=max_i {
-        let i_vec = i.to_be_bytes().to_vec();
-        db.insert(
-            path,
-            &i_vec,
-            Element::new_item(i_vec.to_vec()),
-            INSERT_OPTIONS,
-            Some(&transaction),
-            grove_version,
-        )
-            .unwrap()
-            .expect("successfully inserted values");
-    }
-}
+
 
 
 
